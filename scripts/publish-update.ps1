@@ -116,7 +116,8 @@ if ($sourceChanges) {
 }
 Invoke-Git -Repository $sourcePath -Arguments @('push', 'origin', 'main')
 
-$existingRemotes = @(Get-GitOutput -Repository $forkPath -Arguments @('remote') -split "`r?`n")
+$remoteOutput = Get-GitOutput -Repository $forkPath -Arguments @('remote')
+$existingRemotes = @($remoteOutput -split "`r?`n")
 Invoke-Git -Repository $forkPath -Arguments @('remote', 'set-url', 'origin', 'https://github.com/dufan1032/ZTools-plugins.git')
 if ($existingRemotes -contains 'upstream') {
   Invoke-Git -Repository $forkPath -Arguments @('remote', 'set-url', 'upstream', 'https://github.com/ZToolsCenter/ZTools-plugins.git')
